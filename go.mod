@@ -1,4 +1,4 @@
-module github.com/qdrant/go-client
+module github.com/hanzoai/vector-go
 
 go 1.24.0
 
