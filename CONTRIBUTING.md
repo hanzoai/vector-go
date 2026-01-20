@@ -1,6 +1,6 @@
-## Report Issues on GitHub [Issues](https://github.com/qdrant/go-client/issues)
+## Report Issues on GitHub [Issues](https://github.com/hanzoai/vector-go/issues)
 
-We track public bugs and feature requests using GitHub issues. Please report by [opening a new issue](https://github.com/qdrant/go-client/issues/new).
+We track public bugs and feature requests using GitHub issues. Please report by [opening a new issue](https://github.com/hanzoai/vector-go/issues/new).
 
 **Effective Bug Reports** should include:
 
@@ -71,13 +71,13 @@ The client uses generated stubs from upstream Qdrant proto definitions, which ar
 BRANCH=dev sh internal/tools/sync_proto.sh
 ```
 
-2. Update the `TestImage` value in [`qdrant_test/image_test.go`](https://github.com/qdrant/go-client/blob/master/qdrant_test/image_test.go) to `qdrant/qdrant:dev`.
+2. Update the `TestImage` value in [`qdrant_test/image_test.go`](https://github.com/hanzoai/vector-go/blob/master/qdrant_test/image_test.go) to `qdrant/qdrant:dev`.
 
-3. Implement new Qdrant methods in [`points.go`](https://github.com/qdrant/go-client/blob/master/qdrant/points.go), [`collections.go`](https://github.com/qdrant/go-client/blob/master/qdrant/collections.go), or [`qdrant.go`](https://github.com/qdrant/go-client/blob/master/qdrant/qdrant.go) as needed and associated tests in [`qdrant_test/`](https://github.com/qdrant/go-client/tree/master/qdrant_test).
+3. Implement new Qdrant methods in [`points.go`](https://github.com/hanzoai/vector-go/blob/master/qdrant/points.go), [`collections.go`](https://github.com/hanzoai/vector-go/blob/master/qdrant/collections.go), or [`qdrant.go`](https://github.com/hanzoai/vector-go/blob/master/qdrant/qdrant.go) as needed and associated tests in [`qdrant_test/`](https://github.com/hanzoai/vector-go/tree/master/qdrant_test).
 
-Since the API reference is published at <https://pkg.go.dev/github.com/qdrant/go-client>, the docstrings have to be appropriate.
+Since the API reference is published at <https://pkg.go.dev/github.com/hanzoai/vector-go>, the docstrings have to be appropriate.
 
-4. If there are any new `oneOf` properties in the proto definitions, add helper constructors to [`oneof_factory.go`](https://github.com/qdrant/go-client/blob/master/qdrant/oneof_factory.go) following the existing patterns.
+4. If there are any new `oneOf` properties in the proto definitions, add helper constructors to [`oneof_factory.go`](https://github.com/hanzoai/vector-go/blob/master/qdrant/oneof_factory.go) following the existing patterns.
 
 5. Run the linter, formatter and tests as per the instructions above.
 
@@ -104,4 +104,4 @@ git tag v1.11.0
 git push --tags
 ```
 
-5. Optionally, do a release at <https://github.com/qdrant/go-client/releases> from the tag with notes.
+5. Optionally, do a release at <https://github.com/hanzoai/vector-go/releases> from the tag with notes.

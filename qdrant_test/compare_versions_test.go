@@ -3,7 +3,7 @@ package qdrant_test
 import (
 	"testing"
 
-	"github.com/qdrant/go-client/qdrant"
+	"github.com/hanzoai/vector-go/qdrant"
 )
 
 func TestParseVersion(t *testing.T) {

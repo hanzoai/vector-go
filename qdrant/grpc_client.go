@@ -114,7 +114,7 @@ func (c *GrpcClient) Close() error {
 }
 
 func getClientVersion() string {
-	packageName := "github.com/qdrant/go-client"
+	packageName := "github.com/hanzoai/vector-go"
 	bi, ok := debug.ReadBuildInfo()
 	if !ok {
 		return unknownVersion

@@ -11,6 +11,6 @@ Package provides a client for interfacing with the Qdrant - https://qdrant.tech/
 
 [Qdrant documentation]: https://qdrant.tech/documentation/
 [API Reference]: https://api.qdrant.tech/
-[Godoc Reference]: https://pkg.go.dev/github.com/qdrant/go-client
+[Godoc Reference]: https://pkg.go.dev/github.com/hanzoai/vector-go
 */
 package qdrant

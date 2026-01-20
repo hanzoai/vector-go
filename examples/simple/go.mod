@@ -2,7 +2,7 @@ module simple-example
 
 go 1.23.0
 
-require github.com/qdrant/go-client v1.15.2
+require github.com/hanzoai/vector-go v1.15.2
 
 require (
 	golang.org/x/net v0.38.0 // indirect

@@ -11,7 +11,7 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 
 PROTO_DIR=./internal/proto
 OUT_DIR=./qdrant
-PACKAGE_NAME="github.com/qdrant/go-client;qdrant"
+PACKAGE_NAME="github.com/hanzoai/vector-go;qdrant"
 
 protoc \
     --experimental_allow_proto3_optional \
