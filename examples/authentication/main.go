@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/qdrant/go-client/qdrant"
+	"github.com/hanzoai/vector-go/qdrant"
 )
 
 //nolint:mnd,gocritic // magic numbers is acceptable for this example, as well as exit with fatal.
