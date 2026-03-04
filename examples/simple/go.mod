@@ -1,6 +1,6 @@
 module simple-example
 
-go 1.23.0
+go 1.26
 
 require github.com/hanzoai/vector-go v1.15.2
 
