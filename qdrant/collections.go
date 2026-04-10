@@ -15,9 +15,10 @@ import (
 //   - bool: True if the collection exists, false otherwise.
 //   - error: An error if the operation fails.
 func (c *Client) CollectionExists(ctx context.Context, collectionName string) (bool, error) {
-	resp, err := c.GetCollectionsClient().CollectionExists(ctx, &CollectionExistsRequest{
+	resp := &CollectionExistsResponse{}
+	err := c.get().call(ctx, opCollectionExists, &CollectionExistsRequest{
 		CollectionName: collectionName,
-	})
+	}, resp)
 	if err != nil {
 		return false, newQdrantErr(err, "CollectionExists", collectionName)
 	}
@@ -34,9 +35,10 @@ func (c *Client) CollectionExists(ctx context.Context, collectionName string) (b
 //   - *CollectionInfo: Detailed information about the collection.
 //   - error: An error if the operation fails.
 func (c *Client) GetCollectionInfo(ctx context.Context, collectionName string) (*CollectionInfo, error) {
-	resp, err := c.GetCollectionsClient().Get(ctx, &GetCollectionInfoRequest{
+	resp := &GetCollectionInfoResponse{}
+	err := c.get().call(ctx, opGetCollection, &GetCollectionInfoRequest{
 		CollectionName: collectionName,
-	})
+	}, resp)
 	if err != nil {
 		return nil, newQdrantErr(err, "GetCollection", collectionName)
 	}
@@ -52,7 +54,8 @@ func (c *Client) GetCollectionInfo(ctx context.Context, collectionName string) (
 //   - []string: A slice of collection names.
 //   - error: An error if the operation fails.
 func (c *Client) ListCollections(ctx context.Context) ([]string, error) {
-	resp, err := c.GetCollectionsClient().List(ctx, &ListCollectionsRequest{})
+	resp := &ListCollectionsResponse{}
+	err := c.get().call(ctx, opListCollections, &ListCollectionsRequest{}, resp)
 	if err != nil {
 		return nil, newQdrantErr(err, "ListCollections")
 	}
@@ -72,7 +75,8 @@ func (c *Client) ListCollections(ctx context.Context) ([]string, error) {
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) CreateCollection(ctx context.Context, request *CreateCollection) error {
-	_, err := c.GetCollectionsClient().Create(ctx, request)
+	resp := &CollectionOperationResponse{}
+	err := c.get().call(ctx, opCreateCollection, request, resp)
 	if err != nil {
 		return newQdrantErr(err, "CreateCollection", request.GetCollectionName())
 	}
@@ -88,7 +92,8 @@ func (c *Client) CreateCollection(ctx context.Context, request *CreateCollection
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) UpdateCollection(ctx context.Context, request *UpdateCollection) error {
-	_, err := c.GetCollectionsClient().Update(ctx, request)
+	resp := &CollectionOperationResponse{}
+	err := c.get().call(ctx, opUpdateCollection, request, resp)
 	if err != nil {
 		return newQdrantErr(err, "UpdateCollection", request.GetCollectionName())
 	}
@@ -104,13 +109,14 @@ func (c *Client) UpdateCollection(ctx context.Context, request *UpdateCollection
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) DeleteCollection(ctx context.Context, collectionName string) error {
-	res, err := c.GetCollectionsClient().Delete(ctx, &DeleteCollection{
+	resp := &CollectionOperationResponse{}
+	err := c.get().call(ctx, opDeleteCollection, &DeleteCollection{
 		CollectionName: collectionName,
-	})
+	}, resp)
 	if err != nil {
 		return newQdrantErr(err, "DeleteCollection", collectionName)
 	}
-	if !res.GetResult() {
+	if !resp.GetResult() {
 		return newQdrantErr(errors.New("failed to delete collection"), "DeleteCollection", collectionName)
 	}
 	return nil
@@ -126,7 +132,8 @@ func (c *Client) DeleteCollection(ctx context.Context, collectionName string) er
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) CreateAlias(ctx context.Context, aliasName, collectionName string) error {
-	_, err := c.GetCollectionsClient().UpdateAliases(ctx, &ChangeAliases{
+	resp := &CollectionOperationResponse{}
+	err := c.get().call(ctx, opUpdateAliases, &ChangeAliases{
 		Actions: []*AliasOperations{
 			{
 				Action: &AliasOperations_CreateAlias{
@@ -137,7 +144,7 @@ func (c *Client) CreateAlias(ctx context.Context, aliasName, collectionName stri
 				},
 			},
 		},
-	})
+	}, resp)
 	if err != nil {
 		return newQdrantErr(err, "CreateAlias", collectionName)
 	}
@@ -153,7 +160,8 @@ func (c *Client) CreateAlias(ctx context.Context, aliasName, collectionName stri
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) DeleteAlias(ctx context.Context, aliasName string) error {
-	_, err := c.GetCollectionsClient().UpdateAliases(ctx, &ChangeAliases{
+	resp := &CollectionOperationResponse{}
+	err := c.get().call(ctx, opUpdateAliases, &ChangeAliases{
 		Actions: []*AliasOperations{
 			{
 				Action: &AliasOperations_DeleteAlias{
@@ -163,7 +171,7 @@ func (c *Client) DeleteAlias(ctx context.Context, aliasName string) error {
 				},
 			},
 		},
-	})
+	}, resp)
 	if err != nil {
 		return newQdrantErr(err, "DeleteAlias", aliasName)
 	}
@@ -180,7 +188,8 @@ func (c *Client) DeleteAlias(ctx context.Context, aliasName string) error {
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) RenameAlias(ctx context.Context, oldAliasName, newAliasName string) error {
-	_, err := c.GetCollectionsClient().UpdateAliases(ctx, &ChangeAliases{
+	resp := &CollectionOperationResponse{}
+	err := c.get().call(ctx, opUpdateAliases, &ChangeAliases{
 		Actions: []*AliasOperations{
 			{
 				Action: &AliasOperations_RenameAlias{
@@ -191,7 +200,7 @@ func (c *Client) RenameAlias(ctx context.Context, oldAliasName, newAliasName str
 				},
 			},
 		},
-	})
+	}, resp)
 	if err != nil {
 		return newQdrantErr(err, "RenameAlias")
 	}
@@ -208,9 +217,10 @@ func (c *Client) RenameAlias(ctx context.Context, oldAliasName, newAliasName str
 //   - []string: A slice of alias names.
 //   - error: An error if the operation fails.
 func (c *Client) ListCollectionAliases(ctx context.Context, collectionName string) ([]string, error) {
-	resp, err := c.GetCollectionsClient().ListCollectionAliases(ctx, &ListCollectionAliasesRequest{
+	resp := &ListAliasesResponse{}
+	err := c.get().call(ctx, opListCollectionAliases, &ListCollectionAliasesRequest{
 		CollectionName: collectionName,
-	})
+	}, resp)
 	if err != nil {
 		return nil, newQdrantErr(err, "ListCollectionAliases", collectionName)
 	}
@@ -230,7 +240,8 @@ func (c *Client) ListCollectionAliases(ctx context.Context, collectionName strin
 //   - []*AliasDescription: A slice of AliasDescription objects.
 //   - error: An error if the operation fails.
 func (c *Client) ListAliases(ctx context.Context) ([]*AliasDescription, error) {
-	resp, err := c.GetCollectionsClient().ListAliases(ctx, &ListAliasesRequest{})
+	resp := &ListAliasesResponse{}
+	err := c.get().call(ctx, opListAliases, &ListAliasesRequest{}, resp)
 	if err != nil {
 		return nil, newQdrantErr(err, "ListAliases")
 	}
@@ -246,9 +257,10 @@ func (c *Client) ListAliases(ctx context.Context) ([]*AliasDescription, error) {
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) UpdateAliases(ctx context.Context, actions []*AliasOperations) error {
-	_, err := c.GetCollectionsClient().UpdateAliases(ctx, &ChangeAliases{
+	resp := &CollectionOperationResponse{}
+	err := c.get().call(ctx, opUpdateAliases, &ChangeAliases{
 		Actions: actions,
-	})
+	}, resp)
 	if err != nil {
 		return newQdrantErr(err, "UpdateAliases")
 	}
@@ -265,10 +277,11 @@ func (c *Client) UpdateAliases(ctx context.Context, actions []*AliasOperations) 
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) CreateShardKey(ctx context.Context, collectionName string, request *CreateShardKey) error {
-	_, err := c.GetCollectionsClient().CreateShardKey(ctx, &CreateShardKeyRequest{
+	resp := &CreateShardKeyResponse{}
+	err := c.get().call(ctx, opCreateShardKey, &CreateShardKeyRequest{
 		CollectionName: collectionName,
 		Request:        request,
-	})
+	}, resp)
 	if err != nil {
 		return newQdrantErr(err, "CreateShardKey", collectionName)
 	}
@@ -285,10 +298,11 @@ func (c *Client) CreateShardKey(ctx context.Context, collectionName string, requ
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) DeleteShardKey(ctx context.Context, collectionName string, request *DeleteShardKey) error {
-	_, err := c.GetCollectionsClient().DeleteShardKey(ctx, &DeleteShardKeyRequest{
+	resp := &DeleteShardKeyResponse{}
+	err := c.get().call(ctx, opDeleteShardKey, &DeleteShardKeyRequest{
 		CollectionName: collectionName,
 		Request:        request,
-	})
+	}, resp)
 	if err != nil {
 		return newQdrantErr(err, "DeleteShardKey", collectionName)
 	}
@@ -307,9 +321,10 @@ func (c *Client) DeleteShardKey(ctx context.Context, collectionName string, requ
 //
 //nolint:lll	// Ignoring the long line length for naming consistency.
 func (c *Client) GetCollectionClusterInfo(ctx context.Context, collectionName string) (*CollectionClusterInfoResponse, error) {
-	response, err := c.GetCollectionsClient().CollectionClusterInfo(ctx, &CollectionClusterInfoRequest{
+	response := &CollectionClusterInfoResponse{}
+	err := c.get().call(ctx, opCollectionClusterInfo, &CollectionClusterInfoRequest{
 		CollectionName: collectionName,
-	})
+	}, response)
 	if err != nil {
 		return nil, newQdrantErr(err, "GetCollectionClusterInfo", collectionName)
 	}
@@ -325,7 +340,8 @@ func (c *Client) GetCollectionClusterInfo(ctx context.Context, collectionName st
 // Returns:
 //   - error: An error if the operation fails.
 func (c *Client) UpdateClusterCollectionSetup(ctx context.Context, request *UpdateCollectionClusterSetupRequest) error {
-	_, err := c.GetCollectionsClient().UpdateCollectionClusterSetup(ctx, request)
+	resp := &UpdateCollectionClusterSetupResponse{}
+	err := c.get().call(ctx, opUpdateCollectionCluster, request, resp)
 	if err != nil {
 		return newQdrantErr(err, "UpdateClusterCollectionSetup", request.GetCollectionName())
 	}
