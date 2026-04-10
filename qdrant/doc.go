@@ -1,7 +1,8 @@
 /*
 # Qdrant Go Client
 
-Package provides a client for interfacing with the Qdrant - https://qdrant.tech/ gRPC API.
+Package provides a client for interfacing with the Qdrant vector database
+using the ZAP (Zero-copy Application Protocol) wire protocol over TCP.
 
 # Documentation
 

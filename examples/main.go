@@ -24,14 +24,9 @@ func run() error {
 	// Create new client
 	client, err := qdrant.NewClient(&qdrant.Config{
 		Host: "localhost", // Can be omitted, default is "localhost"
-		Port: 6334,        // Can be omitted, default is 6334
+		Port: 6335,        // ZAP port, can be omitted, default is 6335
 		// APIKey: "<API_KEY>",
-		// UseTLS: true,
 		// PoolSize: 3,
-		// KeepAliveTime: 10,
-		// KeepAliveTimeout: 2,
-		// TLSConfig: &tls.Config{...},
-		// GrpcOptions: []grpc.DialOption{},
 	})
 	if err != nil {
 		panic(err)

@@ -14,7 +14,6 @@ func main() {
 		Host:   "xyz-example.eu-central.aws.cloud.qdrant.io",
 		Port:   6334,
 		APIKey: "<paste-your-api-key-here>",
-		UseTLS: true,
 		// PoolSize: 3,
 		// KeepAliveTime: 10,
 		// KeepAliveTimeout: 2,
