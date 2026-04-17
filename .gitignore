@@ -17,3 +17,4 @@
 # Idea
 .idea
 *.iml
+.DS_Store
