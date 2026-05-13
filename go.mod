@@ -1,9 +1,9 @@
 module github.com/hanzoai/vector-go
 
-go 1.26.1
+go 1.26.3
 
 require (
-	github.com/luxfi/zap v0.2.0
+	github.com/zap-proto/go v0.2.0
 	github.com/stretchr/testify v1.11.1
 	github.com/testcontainers/testcontainers-go v0.40.0
 	google.golang.org/protobuf v1.36.11
