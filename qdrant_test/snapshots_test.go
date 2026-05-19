@@ -9,6 +9,8 @@ import (
 )
 
 func TestSnapshotsClient(t *testing.T) {
+	skipIfShort(t)
+
 	collectionName := t.Name()
 	apiKey := "<SNAPSHOTS_TEST>"
 
