@@ -25,5 +25,9 @@ jobs:
       - name: Build
         run: go build ./...
 
-      - name: Run Tests
-        run: go test -v ./...
+      - name: Run Tests (unit, no containers)
+        # `-short` causes the qdrant_test/* integration tests to skip when
+        # there is no Qdrant container available on the runner. The matching
+        # integration job (when added) should run without -short against a
+        # Qdrant service container.
+        run: go test -short -v ./...
