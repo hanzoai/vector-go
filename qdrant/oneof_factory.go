@@ -118,6 +118,24 @@ func NewQuantizationDiffDisabled() *QuantizationConfigDiff {
 	}
 }
 
+// Creates a *QuantizationConfig instance from *TurboQuantization.
+func NewQuantizationTurbo(turbo *TurboQuantization) *QuantizationConfig {
+	return &QuantizationConfig{
+		Quantization: &QuantizationConfig_Turboquant{
+			Turboquant: turbo,
+		},
+	}
+}
+
+// Creates a *QuantizationConfigDiff instance from *TurboQuantization.
+func NewQuantizationDiffTurbo(turbo *TurboQuantization) *QuantizationConfigDiff {
+	return &QuantizationConfigDiff{
+		Quantization: &QuantizationConfigDiff_Turboquant{
+			Turboquant: turbo,
+		},
+	}
+}
+
 // Creates a *BinaryQuantizationQueryEncoding instance with a specific setting.
 //
 //nolint:lll	// Ignoring the long line length for naming consistency.
@@ -360,7 +378,7 @@ func NewVectorInputSparse(indices []uint32, values []float32) *VectorInput {
 
 // Creates a *VectorInput instance for multi vectors.
 func NewVectorInputMulti(vectors [][]float32) *VectorInput {
-	var multiVec []*DenseVector
+	multiVec := make([]*DenseVector, 0, len(vectors))
 	for _, vector := range vectors {
 		multiVec = append(multiVec, &DenseVector{
 			Data: vector,
@@ -809,6 +827,15 @@ func NewQueryMMR(nearest *VectorInput, mmr *Mmr) *Query {
 	}
 }
 
+// Creates a *Query instance for search with feedback from some oracle.
+func NewQueryRelevanceFeedback(relevanceFeedback *RelevanceFeedbackInput) *Query {
+	return &Query{
+		Variant: &Query_RelevanceFeedback{
+			RelevanceFeedback: relevanceFeedback,
+		},
+	}
+}
+
 // Creates a *FacetValue instance from a string.
 func NewFacetValue(value string) *FacetValue {
 	return &FacetValue{
@@ -1252,6 +1279,15 @@ func NewUpdateCollectionClusterReplicatePoints(collectionName string, replicateP
 		CollectionName: collectionName,
 		Operation: &UpdateCollectionClusterSetupRequest_ReplicatePoints{
 			ReplicatePoints: replicatePoints,
+		},
+	}
+}
+
+// Creates a *FeedbackStrategy instance from an instance of *NaiveFeedbackStrategy.
+func NewFeedbackStrategyNaive(naive *NaiveFeedbackStrategy) *FeedbackStrategy {
+	return &FeedbackStrategy{
+		Variant: &FeedbackStrategy_Naive{
+			Naive: naive,
 		},
 	}
 }

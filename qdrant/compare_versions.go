@@ -1,10 +1,12 @@
 package qdrant
 
 import (
+	"context"
 	"fmt"
-	"runtime/debug"
+	"log/slog"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 )
 
@@ -15,6 +17,20 @@ const unknownVersion = "Unknown"
 type Version struct {
 	Major int
 	Minor int
+}
+
+func getServerVersion(clientConn *GrpcClient, timeout time.Duration) string {
+	logger := slog.Default()
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	healthCheckResult, err := clientConn.qdrant.HealthCheck(ctx, &HealthCheckRequest{})
+	if err != nil {
+		logger.WarnContext(ctx, "Unable to get server version, use default", "err", err, "default", unknownVersion)
+		return unknownVersion
+	}
+	serverVersion := healthCheckResult.GetVersion()
+
+	return serverVersion
 }
 
 func removeLeadingNonNumeric(versionStr string) string {
@@ -70,22 +86,3 @@ func IsCompatible(clientVersion, serverVersion string) bool {
 	return diff <= 1 && diff >= -1
 }
 
-func getClientVersion() string {
-	packageName := "github.com/hanzoai/vector-go"
-	bi, ok := debug.ReadBuildInfo()
-	if !ok {
-		return unknownVersion
-	}
-
-	if bi.Main.Path == packageName {
-		return bi.Main.Version
-	}
-
-	for _, dep := range bi.Deps {
-		if dep.Path == packageName {
-			return dep.Version
-		}
-	}
-
-	return unknownVersion
-}

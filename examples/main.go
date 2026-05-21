@@ -29,7 +29,7 @@ func run() error {
 		// PoolSize: 3,
 	})
 	if err != nil {
-		panic(err)
+		return fmt.Errorf("could not create client: %w", err)
 	}
 	defer client.Close()
 	// Get a context for a minute

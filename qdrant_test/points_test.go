@@ -35,7 +35,7 @@ func TestPointsClient(t *testing.T) {
 
 	client, err := qdrant.NewClient(&qdrant.Config{
 		Host:   host,
-		Port:   port.Int(),
+		Port:   int(port.Num()),
 		APIKey: apiKey,
 	})
 	require.NoError(t, err)
@@ -303,6 +303,32 @@ func TestPointsClient(t *testing.T) {
 		res, err := client.DeleteFieldIndex(ctx, &qdrant.DeleteFieldIndexCollection{
 			CollectionName: collectionName,
 			FieldName:      "key",
+			Wait:           &wait,
+		})
+		require.NoError(t, err)
+		require.NotNil(t, res)
+	})
+
+	t.Run("CreateVectorName", func(t *testing.T) {
+		res, err := client.CreateVectorName(ctx, &qdrant.CreateVectorNameRequest{
+			CollectionName: collectionName,
+			VectorName:     "extra",
+			VectorConfig: &qdrant.CreateVectorNameRequest_DenseConfig{
+				DenseConfig: &qdrant.DenseVectorCreationConfig{
+					Size:     vectorSize,
+					Distance: distance,
+				},
+			},
+			Wait: &wait,
+		})
+		require.NoError(t, err)
+		require.NotNil(t, res)
+	})
+
+	t.Run("DeleteVectorName", func(t *testing.T) {
+		res, err := client.DeleteVectorName(ctx, &qdrant.DeleteVectorNameRequest{
+			CollectionName: collectionName,
+			VectorName:     "extra",
 			Wait:           &wait,
 		})
 		require.NoError(t, err)
