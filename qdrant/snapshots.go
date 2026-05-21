@@ -16,10 +16,9 @@ import (
 //   - *SnapshotDescription: Description of the created snapshot
 //   - error: Any error encountered during the snapshot creation
 func (c *Client) CreateSnapshot(ctx context.Context, collection string) (*SnapshotDescription, error) {
-	resp := &CreateSnapshotResponse{}
-	err := c.get().call(ctx, opCreateSnapshot, &CreateSnapshotRequest{
+	resp, err := c.GetSnapshotsClient().Create(ctx, &CreateSnapshotRequest{
 		CollectionName: collection,
-	}, resp)
+	})
 	if err != nil {
 		return nil, newQdrantErr(err, "CreateSnapshot")
 	}
@@ -36,10 +35,9 @@ func (c *Client) CreateSnapshot(ctx context.Context, collection string) (*Snapsh
 //   - []*SnapshotDescription: A slice of snapshot descriptions
 //   - error: Any error encountered while listing snapshots
 func (c *Client) ListSnapshots(ctx context.Context, collection string) ([]*SnapshotDescription, error) {
-	resp := &ListSnapshotsResponse{}
-	err := c.get().call(ctx, opListSnapshots, &ListSnapshotsRequest{
+	resp, err := c.GetSnapshotsClient().List(ctx, &ListSnapshotsRequest{
 		CollectionName: collection,
-	}, resp)
+	})
 	if err != nil {
 		return nil, newQdrantErr(err, "ListSnapshots")
 	}
@@ -56,11 +54,10 @@ func (c *Client) ListSnapshots(ctx context.Context, collection string) ([]*Snaps
 // Returns:
 //   - error: Any error encountered while deleting the snapshot
 func (c *Client) DeleteSnapshot(ctx context.Context, collection string, snapshot string) error {
-	resp := &DeleteSnapshotResponse{}
-	err := c.get().call(ctx, opDeleteSnapshot, &DeleteSnapshotRequest{
+	_, err := c.GetSnapshotsClient().Delete(ctx, &DeleteSnapshotRequest{
 		CollectionName: collection,
 		SnapshotName:   snapshot,
-	}, resp)
+	})
 	if err != nil {
 		return newQdrantErr(err, "DeleteSnapshot")
 	}
@@ -77,8 +74,7 @@ func (c *Client) DeleteSnapshot(ctx context.Context, collection string, snapshot
 //   - *SnapshotDescription: Description of the created full snapshot
 //   - error: Any error encountered during the full snapshot creation
 func (c *Client) CreateFullSnapshot(ctx context.Context) (*SnapshotDescription, error) {
-	resp := &CreateSnapshotResponse{}
-	err := c.get().call(ctx, opCreateFullSnapshot, &CreateFullSnapshotRequest{}, resp)
+	resp, err := c.GetSnapshotsClient().CreateFull(ctx, &CreateFullSnapshotRequest{})
 	if err != nil {
 		return nil, newQdrantErr(err, "CreateFullSnapshot")
 	}
@@ -94,8 +90,7 @@ func (c *Client) CreateFullSnapshot(ctx context.Context) (*SnapshotDescription, 
 //   - []*SnapshotDescription: A slice of full snapshot descriptions
 //   - error: Any error encountered while listing full snapshots
 func (c *Client) ListFullSnapshots(ctx context.Context) ([]*SnapshotDescription, error) {
-	resp := &ListSnapshotsResponse{}
-	err := c.get().call(ctx, opListFullSnapshots, &ListFullSnapshotsRequest{}, resp)
+	resp, err := c.GetSnapshotsClient().ListFull(ctx, &ListFullSnapshotsRequest{})
 	if err != nil {
 		return nil, newQdrantErr(err, "ListFullSnapshots")
 	}
@@ -111,10 +106,9 @@ func (c *Client) ListFullSnapshots(ctx context.Context) ([]*SnapshotDescription,
 // Returns:
 //   - error: Any error encountered while deleting the full snapshot
 func (c *Client) DeleteFullSnapshot(ctx context.Context, snapshot string) error {
-	resp := &DeleteSnapshotResponse{}
-	err := c.get().call(ctx, opDeleteFullSnapshot, &DeleteFullSnapshotRequest{
+	_, err := c.GetSnapshotsClient().DeleteFull(ctx, &DeleteFullSnapshotRequest{
 		SnapshotName: snapshot,
-	}, resp)
+	})
 	if err != nil {
 		return newQdrantErr(err, "DeleteFullSnapshot")
 	}
