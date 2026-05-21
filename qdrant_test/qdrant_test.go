@@ -9,6 +9,8 @@ import (
 )
 
 func TestHealthCheck(t *testing.T) {
+	skipIfShort(t)
+
 	apiKey := "<HEALTHCHECK_TEST>"
 
 	ctx, cancel := context.WithCancel(context.Background())
