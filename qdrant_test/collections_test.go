@@ -9,6 +9,8 @@ import (
 )
 
 func TestCollectionsClient(t *testing.T) {
+	skipIfShort(t)
+
 	collectionName := t.Name()
 	vectorSize := uint64(384)
 	distance := qdrant.Distance_Cosine
