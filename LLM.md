@@ -1,4 +1,4 @@
-# LLM.md - Hanzo Vector Go
+# Hanzo Vector Go
 
 ## Overview
 Go module: github.com/hanzoai/vector-go
