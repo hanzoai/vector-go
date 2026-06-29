@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/hero.svg" alt="vector-go" width="880"></p>
+
 <p align="center">
   <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://github.com/qdrant/qdrant/raw/master/docs/logo-dark.svg">
