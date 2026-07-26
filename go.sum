@@ -64,9 +64,9 @@ github.com/lufia/plan9stats v0.0.0-20260330125221-c963978e514e h1:Q6MvJtQK/iRcRt
 github.com/lufia/plan9stats v0.0.0-20260330125221-c963978e514e/go.mod h1:autxFIvghDt3jPTLoqZ9OZ7s9qTGNAWmYCjVFWPX/zg=
 github.com/luxfi/mdns v0.1.0 h1:VB3mQcETc9j5SY1S6lAgFtuGr/rjWuDgPYnxS+OKWMQ=
 github.com/luxfi/mdns v0.1.0/go.mod h1:/3dheKVjUk2yiS/ocH1IDzeLXOIe+kpVsErIGDOZdiQ=
-github.com/luxfi/pq v1.0.3 h1:pFlQm1+5FuKTDUh2y/23bXWkN4I2Rc5iuxJypwDFFMs=
+github.com/luxfi/pq v1.0.3 h1:ksw1dmfTR0dqqNMRS7BjGcprCO2Fhc+3Iiq2/NMuONw=
 github.com/luxfi/pq v1.0.3/go.mod h1:8bppZcRElfrVt0n3nYCZW3iX1TvhvzNbdjNdK1irgIE=
-github.com/luxfi/zap v0.6.0 h1:baVcYKeqaNemGisYFtYtfIvVLW4hRXZo3wlXtOkk7NM=
+github.com/luxfi/zap v0.6.0 h1:4MyGq5CfMimG/TjyLnqCAETA6cFYOcrAQpSYWL2vHvI=
 github.com/luxfi/zap v0.6.0/go.mod h1:1SDWtb4B3kxkd3VKLDae0x7lMtlvAsWLQxhhNIYsePI=
 github.com/magiconair/properties v1.8.10 h1:s31yESBquKXCV9a/ScB3ESkOjUYYv+X0rg8SYxI99mE=
 github.com/magiconair/properties v1.8.10/go.mod h1:Dhd985XPs7jluiymwWYZ0G4Z61jb3vdS329zhj2hYo0=
