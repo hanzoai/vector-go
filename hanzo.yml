@@ -1,0 +1,16 @@
+# Canonical CI/CD config for hanzoai/vector-go — read by the hanzoai/ci reusable
+# (.hanzo/workflows/cicd.yml) and by platform.hanzo.ai.
+#
+# A Go client library: ships from a tag as a module, builds no image, so no
+# `images:` and no `deploy:`.
+#
+# The `test` gate is RED today, and correctly so: qdrant_test/points_test.go:315
+# calls client.CreateVectorName, which no longer exists on qdrant.Client. The
+# test package has not compiled since that method was dropped, and nothing in
+# this repo was looking. Fix the call and the gate goes green on its own.
+
+test:
+  - name: build
+    run: go build ./...
+  - name: test
+    run: go test -count=1 ./...
