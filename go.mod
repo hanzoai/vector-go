@@ -1,9 +1,8 @@
-module github.com/qdrant/go-client
+module github.com/hanzoai/vector-go
 
 go 1.26.4
 
 require (
-	github.com/hanzoai/vector-go v0.1.1
 	github.com/luxfi/zap v0.6.0
 	github.com/stretchr/testify v1.11.1
 	github.com/testcontainers/testcontainers-go v0.42.0

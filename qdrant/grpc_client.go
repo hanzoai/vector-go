@@ -119,7 +119,10 @@ func (c *GrpcClient) Close() error {
 }
 
 func getClientVersion() string {
-	packageName := "github.com/qdrant/go-client"
+	// Must match this module's path: getClientVersion compares it against
+	// bi.Main.Path and the dependency list to report the client version, so a
+	// stale name here silently reports unknownVersion.
+	packageName := "github.com/hanzoai/vector-go"
 	bi, ok := debug.ReadBuildInfo()
 	if !ok {
 		return unknownVersion
