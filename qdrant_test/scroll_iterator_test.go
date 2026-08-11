@@ -7,7 +7,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/qdrant/go-client/qdrant"
+	"github.com/hanzoai/vector-go/qdrant"
 	"github.com/stretchr/testify/require"
 )
 
