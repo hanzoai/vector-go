@@ -1,6 +1,6 @@
 module github.com/hanzoai/vector-go
 
-go 1.26.4
+go 1.27.1
 
 require (
 	github.com/luxfi/zap v0.6.0

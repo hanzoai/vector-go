@@ -12,7 +12,7 @@ import (
 // PoolSize in the Config.
 type Client struct {
 	clients []*GrpcClient
-	next    uint32
+	next    atomic.Uint32
 }
 
 // NewClient creates a new Qdrant client.
@@ -59,7 +59,7 @@ func (c *Client) get() *GrpcClient {
 		return c.clients[0]
 	}
 	// Atomically increment and wrap around the counter
-	idx := atomic.AddUint32(&c.next, 1) - 1
+	idx := c.next.Add(1) - 1
 	return c.clients[idx%uint32(len(c.clients))]
 }
 
@@ -112,6 +112,8 @@ func (c *Client) Close() error {
 }
 
 // Creates a pointer to a value of any type.
+//
+//go:fix inline
 func PtrOf[T any](t T) *T {
-	return &t
+	return new(t)
 }

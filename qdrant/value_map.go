@@ -95,13 +95,13 @@ func NewValue(v any) (*Value, error) {
 	case []byte:
 		s := base64.StdEncoding.EncodeToString(v)
 		return NewValueString(s), nil
-	case map[string]interface{}:
+	case map[string]any:
 		v2, err := NewStruct(v)
 		if err != nil {
 			return nil, err
 		}
 		return NewValueStruct(v2), nil
-	case []interface{}:
+	case []any:
 		v2, err := NewListValue(v)
 		if err != nil {
 			return nil, err
@@ -163,7 +163,7 @@ func NewValueFromList(values ...*Value) *Value {
 
 // Constructs a ListValue from a general-purpose Go slice.
 // The slice elements are converted using NewValue().
-func NewListValue(v []interface{}) (*ListValue, error) {
+func NewListValue(v []any) (*ListValue, error) {
 	x := &ListValue{Values: make([]*Value, len(v))}
 	for i, v := range v {
 		var err error
@@ -178,7 +178,7 @@ func NewListValue(v []interface{}) (*ListValue, error) {
 // Constructs a Struct from a general-purpose Go map.
 // The map keys must be valid UTF-8.
 // The map values are converted using NewValue().
-func NewStruct(v map[string]interface{}) (*Struct, error) {
+func NewStruct(v map[string]any) (*Struct, error) {
 	x := &Struct{Fields: make(map[string]*Value, len(v))}
 	for k, v := range v {
 		if !utf8.ValidString(k) {
